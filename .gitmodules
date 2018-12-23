@@ -1,0 +1,6 @@
+[submodule "DSharpPlus"]
+	path = DSharpPlus
+	url = https://github.com/DSharpPlus/DSharpPlus.git
+[submodule "Overwatch-Custom-Game-Automation"]
+	path = Overwatch-Custom-Game-Automation
+	url = https://github.com/ItsDeltin/Overwatch-Custom-Game-Automation.git

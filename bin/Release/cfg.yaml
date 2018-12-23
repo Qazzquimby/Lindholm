@@ -1,0 +1,19 @@
+﻿BattlenetExecutableFilePath: E:\Program Files (x86)\Battle.net\Battle.net.exe
+#OverwatchSettingsFilePath: C:\Users\User\Documents\Overwatch\Settings\Settings_v0.ini
+
+ServerName: Unnamed Lindholm Server
+BlueName: Blue Team
+RedName: Red Team
+
+PresetLocation: 7
+
+NumberPlayersWhenBotsAreRemoved: 7
+
+EndMessage1st: This server is powered by Lindholm, and should be up 24/7.
+EndMessage2nd: 
+
+Bots: 
+  - Hero: Roadhog
+    Difficulty: Medium
+  - Hero: Soldier76
+    Difficulty: Medium
