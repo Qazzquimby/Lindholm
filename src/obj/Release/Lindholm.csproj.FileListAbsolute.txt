@@ -1,0 +1,13 @@
+E:\LifeItself\Lindholm\src\bin\Release\cfg.yaml
+E:\LifeItself\Lindholm\src\bin\Release\Lindholm.exe
+E:\LifeItself\Lindholm\src\bin\Release\Lindholm.pdb
+E:\LifeItself\Lindholm\src\bin\Release\Deltin.CustomGameAutomation.dll
+E:\LifeItself\Lindholm\src\bin\Release\YamlDotNet.dll
+E:\LifeItself\Lindholm\src\bin\Release\Deltin.CustomGameAutomation.pdb
+E:\LifeItself\Lindholm\src\bin\Release\Deltin.CustomGameAutomation.xml
+E:\LifeItself\Lindholm\src\bin\Release\YamlDotNet.xml
+E:\LifeItself\Lindholm\src\obj\Release\Lindholm.csprojAssemblyReference.cache
+E:\LifeItself\Lindholm\src\obj\Release\Lindholm.csproj.CoreCompileInputs.cache
+E:\LifeItself\Lindholm\src\obj\Release\Lindholm.csproj.CopyComplete
+E:\LifeItself\Lindholm\src\obj\Release\Lindholm.exe
+E:\LifeItself\Lindholm\src\obj\Release\Lindholm.pdb
