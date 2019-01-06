@@ -95,6 +95,12 @@ We are working to improve stability in these cases.
 If you find Lindholm has added too many bots (a result of failing to remove bots), you may choose not to intervene.  
 This problem is usually fixed at the beginning of a new match, or when more players join.
 
+## FAQ
+
+- #### Overwatch looks grey?  
+Lindholm requires Overwatch's contrast to be set to minimum to see properly, and automatically sets the contrast when it launches Overwatch.  
+You can set the contrast back to normal in Overwatch's settings.
+
 ## Built With
 
 * [Overwatch-Custom-Game-Automation](https://github.com/ItsDeltin/Overwatch-Custom-Game-Automation) - Makes interfacing with Overwatch custom games possible.
