@@ -48,7 +48,7 @@ Blizzard blocks certain names based on length and keywords. If your name doesn't
 
 ```PresetLocation``` is the preset that will be loaded when your custom game is started.
 Presets are numbered starting with 0, in reading order.
-Preset buttons come in rows of 4 in the preset menu, so the layout looks like:
+Preset buttons come in rows of 4 in the preset menu, so the layout looks like:  
 ```0  1  2  3```  
 ```4  5  6  7```  
 ```8  9  10 11```  
