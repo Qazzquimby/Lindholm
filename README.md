@@ -9,6 +9,14 @@ At this time, Lindholm can:
 
 With more features in development, including custom map rotations, discord integration, game logging and analytics.
 
+## Is Lindholm for me?
+
+The current version of Lindholm is designed to run classic Overwatch styled custom games, with the same number of players on each team, and may not function well in boss style servers.  
+
+The current version of Lindholm is not designed to enforce any rules that make up some custom games, such as swapping players on death, or requiring hero switches.  
+
+Outside of these cases, Lindholm is useful for hosts who want to provide a more consistent service with less tedious management.
+
 ## Getting Started
 
 These instructions will get Lindholm configured on your system and running your server.
@@ -19,7 +27,8 @@ These instructions will get Lindholm configured on your system and running your 
 - Battlenet, and Overwatch.
 - At least one custom game preset saved in Overwatch for automatic setup.
 - Optionally an alternate Battlenet account with Overwatch, if you wish to play while the server is running.
-- Optionally a Windows virtual machine. Some systems will require Overwatch be the active window while Lindholm is running, making the computer effectively unusable without a virtual machine.
+- Optionally a Windows virtual machine. Some systems will require Overwatch be the active window while Lindholm is running, making the computer effectively unusable without a virtual machine.  
+- Optionally an additional copy of Overwatch on a different machine or VM to allow you to play on the custom server while it is being automated.
 
 ### Installing
 
@@ -96,6 +105,16 @@ If you find Lindholm has added too many bots (a result of failing to remove bots
 This problem is usually fixed at the beginning of a new match, or when more players join.
 
 ## FAQ
+
+- #### I want to swap players, or use chat in the automated server.
+This is usually safe to do, though can cause problems if the bot tries to act while you're working. If anything goes wrong, see "Correcting Errors" above.
+
+- #### I want tomake changes in the server settings.
+This will certainly cause problems due to obscuring the bot's vision. 
+1. Close Lindholm (the command window, not Overwatch)
+2. Make your changes in settings.
+3. Navigate back to the lobby screen.
+4. Launch Lindholm, which will start using the Existing Server Run execution.
 
 - #### Overwatch looks grey?  
 Lindholm requires Overwatch's contrast to be set to minimum to see properly, and automatically sets the contrast when it launches Overwatch.  
