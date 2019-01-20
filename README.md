@@ -87,7 +87,8 @@ This lets you stop and restart the bot without needing to repeat server setup.
 
 1. Configuration must be complete.
 2. Overwatch must be open, with a custom server running.
-3. Overwatch must be at the server's lobby screen.
+2. A game must be currently ongoing. The game can't be waiting in the lobby.
+3. Overwatch must be viewing the server's lobby screen. The lobby screen is reached from the main pause screen through esc -> show lobby.
 3. **Overwatch must have contrast set to minimum in settings.** This is set automatically during the Full Setup Run.
 
 
