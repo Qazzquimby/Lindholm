@@ -17,7 +17,7 @@ public class Config
     public readonly int NumberPlayersWhenBotsAreRemoved;
     public readonly string OverwatchSettingsFilePath;
 
-    public readonly int PresetLocation;
+    public readonly string PresetName;
     public readonly string RedName;
     public readonly string ServerName;
 
@@ -36,7 +36,12 @@ public class Config
 
         NumberPlayersWhenBotsAreRemoved = int.Parse(InitField("NumberPlayersWhenBotsAreRemoved"));
 
-        PresetLocation = int.Parse(InitField("PresetLocation"));
+        PresetName = InitField("PresetName");
+        if (PresetName == "REPLACE ME WITH THE NAME OF YOUR PRESET")
+        {
+            Console.WriteLine("!!! You must set the value of PresetName in cfg.yaml for Lindholm to load your preset.");
+        }
+
         Bots = InitBots();
         if (GetNumTotalBots() + NumberPlayersWhenBotsAreRemoved > 12)
         {

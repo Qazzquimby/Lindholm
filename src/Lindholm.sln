@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lindholm", "Lindholm.csproj", "{A07D0B20-BEA5-4EDE-B5B8-F68933C4827F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomGameLib", "Overwatch-Custom-Game-Automation\CustomGameLib\CustomGameLib\CustomGameLib.csproj", "{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,18 +26,6 @@ Global
 		{A07D0B20-BEA5-4EDE-B5B8-F68933C4827F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A07D0B20-BEA5-4EDE-B5B8-F68933C4827F}.Release|x86.ActiveCfg = Release|x86
 		{A07D0B20-BEA5-4EDE-B5B8-F68933C4827F}.Release|x86.Build.0 = Release|x86
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Debug|x86.Build.0 = Debug|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Final|Any CPU.ActiveCfg = Final|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Final|Any CPU.Build.0 = Final|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Final|x86.ActiveCfg = Final|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Final|x86.Build.0 = Final|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Release|x86.ActiveCfg = Release|Any CPU
-		{7D6BA1B1-DA7B-4AEA-BA24-3657698F94AE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

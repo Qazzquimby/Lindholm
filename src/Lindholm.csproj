@@ -77,6 +77,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Deltin.CustomGameAutomation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\User\source\repos\Overwatch-Custom-Game-Automation\Deltin.CustomGameAutomation bin\Deltin.CustomGameAutomation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
@@ -118,12 +122,6 @@
   <ItemGroup>
     <Content Include="Lindholm.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Overwatch-Custom-Game-Automation\CustomGameLib\CustomGameLib\CustomGameLib.csproj">
-      <Project>{7d6ba1b1-da7b-4aea-ba24-3657698f94ae}</Project>
-      <Name>CustomGameLib</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />
@@ -142,4 +140,9 @@
     <Message Text="ILMerge @(MergeAsm) -&gt; $(MergedAssembly)" Importance="high" />
     <ILMerge InputAssemblies="@(MergeAsm)" OutputFile="$(MergedAssembly)" TargetKind="SameAsPrimaryAssembly" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).exe"  "$(SolutionDir)..\$(ProjectName).exe"
+copy /Y "$(TargetDir)cfg.yaml"  "$(SolutionDir)..\cfg.yaml"
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

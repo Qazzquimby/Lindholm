@@ -31,7 +31,7 @@ internal class GameLoop
 
     private Process CreateNewOverwatchProcess()
     {
-        var info = new OverwatchProcessInfoAuto
+        var info = new OverwatchInfoAuto
         {
             BattlenetExecutableFilePath = Cfg.BattlenetExecutableFilePath,
             OverwatchSettingsFilePath = Cfg.OverwatchSettingsFilePath,
@@ -41,14 +41,15 @@ internal class GameLoop
         return process;
     }
 
-    private Process CreateNewOverwatchProcessFromInfo(OverwatchProcessInfoAuto info)
+    private Process CreateNewOverwatchProcessFromInfo(OverwatchInfoAuto info)
     {
         Process process = null;
         while (process == null)
         {
             try
             {
-                process = CustomGame.CreateOverwatchProcessAutomatically(info);
+//                process = CustomGame.CreateOverwatchProcessAutomatically(info);
+                process = CustomGame.StartOverwatch(info);
             }
             catch (OverwatchStartFailedException ex)
             {
@@ -79,25 +80,29 @@ internal class GameLoop
 
     private void FirstTimeSetup()
     {
-        Cg.Settings.SetJoinSetting(Join.Everyone);
-
+        Cg.Settings.JoinSetting = Join.Everyone;
         Cg.Settings.SetGameName(Cfg.ServerName);
-        Cg.Settings.SetTeamName(Team.Blue, $@"\ {Cfg.BlueName}");
-        Cg.Settings.SetTeamName(Team.Red, $"* {Cfg.RedName}");
+
+        //        Cg.Settings.SetTeamName(Team.Blue, $@"\ {Cfg.BlueName}");
+        //        Cg.Settings.SetTeamName(Team.Red, $"* {Cfg.RedName}");
+
+        Cg.Settings.SetTeamName(Team.Blue, Cfg.BlueName);        
+        Cg.Settings.SetTeamName(Team.Red, Cfg.RedName);
 
         SwapHostToSpectate();
 
-        Cg.Settings.LoadPreset(Cfg.PresetLocation);
+        Cg.Settings.LoadPreset(Cfg.PresetName);
         Cg.Chat.SwapChannel(Channel.Match);
 
         Cg.StartGame();
-
+        Cg.Chat.SwapChannel(Channel.Match);
         Program.EnterPhase(typeof(First30SecondsPhase));
     }
 
     private void ExistingGameSetup()
     {
         Cg.AI.RemoveAllBotsAuto();
+        Cg.Chat.SwapChannel(Channel.Match);
         Program.EnterPhase(typeof(GamePhase));
     }
 

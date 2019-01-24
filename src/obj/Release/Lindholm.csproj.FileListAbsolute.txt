@@ -3,7 +3,6 @@ E:\LifeItself\Lindholm\src\bin\Release\Lindholm.exe
 E:\LifeItself\Lindholm\src\bin\Release\Lindholm.pdb
 E:\LifeItself\Lindholm\src\bin\Release\Deltin.CustomGameAutomation.dll
 E:\LifeItself\Lindholm\src\bin\Release\YamlDotNet.dll
-E:\LifeItself\Lindholm\src\bin\Release\Deltin.CustomGameAutomation.pdb
 E:\LifeItself\Lindholm\src\bin\Release\Deltin.CustomGameAutomation.xml
 E:\LifeItself\Lindholm\src\bin\Release\YamlDotNet.xml
 E:\LifeItself\Lindholm\src\obj\Release\Lindholm.csprojAssemblyReference.cache

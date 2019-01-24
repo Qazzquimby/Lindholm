@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Deltin.CustomGameAutomation;
 
@@ -23,9 +24,11 @@ public class Program
 
     private static void Main()
     {
+        Console.WriteLine("Starting Up");
         Config cfg = new Config();
         _loop = new GameLoop(cfg);
         _loop.Cg.OnGameOver += SetGameEnded;
+        _loop.Cg.OnRoundOver += WaitForRoundOver;
         _loop.Start();
     }
 
@@ -55,6 +58,15 @@ public class Program
 //            }
 
             GameEnded = true;
+        }
+    }
+
+    private static void WaitForRoundOver(object sender, EventArgs e)
+    {
+        var customGame = (CustomGame)sender;
+        using (customGame.LockHandler.Interactive)
+        {
+            Thread.Sleep(7000);
         }
     }
 
@@ -270,7 +282,8 @@ public class Program
                         empties = EmptyBlueSlots();
                     }
 
-                    List<int> dead = _loop.Cg.PlayerInfo.PlayersDead();
+                    
+                    List<int> dead = _loop.Cg.PlayerInfo.GetDeadSlots();
                     foreach (int deadSlot in dead)
                     {
                         if (slots.Contains(deadSlot))
