@@ -24,12 +24,20 @@ public class Program
 
     private static void Main()
     {
-        Console.WriteLine("Starting Up");
-        Config cfg = new Config();
-        _loop = new GameLoop(cfg);
-        _loop.Cg.OnGameOver += SetGameEnded;
-        _loop.Cg.OnRoundOver += WaitForRoundOver;
-        _loop.Start();
+        try
+        {
+            Console.WriteLine("Starting Up");
+            Config cfg = new Config();
+            _loop = new GameLoop(cfg);
+            _loop.Cg.OnGameOver += SetGameEnded;
+            _loop.Cg.OnRoundOver += WaitForRoundOver;
+            _loop.Start();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error:"+ e);
+            Console.ReadLine();
+        }
     }
 
 
