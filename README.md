@@ -55,17 +55,8 @@ If it is not present at that location, remove the "#" symbol on the line, and re
 ```ServerName``` is the name your server will be given. 
 Blizzard blocks certain names based on length and keywords. If your name doesn't load properly, try using a different name.
 
-```PresetLocation``` is the preset that will be loaded when your custom game is started.
-Presets are numbered starting with 0, in reading order.
-Preset buttons come in rows of 4 in the preset menu, so the layout looks like:  
-```0  1  2  3```  
-```4  5  6  7```  
-```8  9  10 11```  
-etc.  
-**Important Note:** This feature is unstable, and may fail to load a preset or load an incorrect preset at times. 
-Consider manually verifying the preset was correctly loaded, or setting up the server preset manually and then starting Lindholm.
-Manually verifying the preset can be made easier by using a unique number of spectator slots in the preset.
-See "Correcting Errors"
+```PresetName``` is the name of the preset that will be loaded when your custom game is started.
+The Lindholm console will give an alert if it fails to find the preset you request. This might happen if Overwatch is taking a very long time to load on your system. If this happens, you can close Lindholm, set the preset manually, and restart Lindholm, as detailed in "Correcting Errors."
 
 ### Running Lindholm
 
