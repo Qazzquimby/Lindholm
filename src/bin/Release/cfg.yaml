@@ -8,7 +8,7 @@ BattlenetExecutableFilePath: C:\Program Files (x86)\Battle.net\Battle.net.exe
 ServerName: Unnamed Lindholm Server
 
 ##IMPORTANT
-#The index of the settings preset you want to load. Locations start at 0 and are listed in reading order.
+#The name of the preset you want to load.
 PresetName: REPLACE ME WITH THE NAME OF YOUR PRESET
 
 #Team names
