@@ -11,6 +11,11 @@ public class Config
 
     public readonly List<Tuple<AIHero, Difficulty>> Bots;
 
+    public readonly string StartMessage1st;
+    public readonly string StartMessage2nd;
+
+    public readonly string FewPlayersMessage;
+
     public readonly string EndMessage1st;
     public readonly string EndMessage2nd;
 
@@ -31,8 +36,16 @@ public class Config
         ServerName = InitField("ServerName");
         BlueName = InitField("BlueName");
         RedName = InitField("RedName");
+
+        StartMessage1st = InitField("StartMessage1st");
+        StartMessage2nd = InitField("StartMessage2nd");
+
+        FewPlayersMessage = InitField("FewPlayersMessage");
+
         EndMessage1st = InitField("EndMessage1st");
         EndMessage2nd = InitField("EndMessage2nd");
+
+
 
         NumberPlayersWhenBotsAreRemoved = int.Parse(InitField("NumberPlayersWhenBotsAreRemoved"));
 

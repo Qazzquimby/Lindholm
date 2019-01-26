@@ -74,7 +74,9 @@ public class Program
         var customGame = (CustomGame)sender;
         using (customGame.LockHandler.Interactive)
         {
+            Console.WriteLine("Round Over");
             Thread.Sleep(7000);
+            Console.WriteLine("New Round");
         }
     }
 
@@ -82,9 +84,32 @@ public class Program
     {
         GameEnded = false;
         Console.WriteLine("running game over");
+        ChatEndMessages();
+    }
 
+    public static void ChatStartMessages()
+    {
+        _loop.Cg.Chat.SendChatMessage(_loop.Cfg.StartMessage1st);
+        _loop.Cg.Chat.SendChatMessage(_loop.Cfg.StartMessage2nd);
+    }
+
+    public static void ChatEndMessages()
+    {
         _loop.Cg.Chat.SendChatMessage(_loop.Cfg.EndMessage1st);
         _loop.Cg.Chat.SendChatMessage(_loop.Cfg.EndMessage2nd);
+    }
+
+    public static void ChatFewPlayersMessageIfFewPlayers()
+    {
+        if (_loop.Cg.PlayerCount - NumBots > 0)
+        {
+            ChatFewerPlayersMessage();
+        }
+    }
+
+    public static void ChatFewerPlayersMessage()
+    {
+        _loop.Cg.Chat.SendChatMessage(_loop.Cfg.FewPlayersMessage);
     }
 
     public static void PrintRunningTrace()
@@ -188,7 +213,6 @@ public class Program
     {
         Console.WriteLine("Settling blue team");
         List<int> filledSlots = _loop.Cg.BlueSlots;
-        Console.WriteLine($"blue filled slots {filledSlots}.");
         int swaps = 0;
         for (int i = 0; i < filledSlots.Count; i++)
         {
@@ -204,7 +228,6 @@ public class Program
     {
         Console.WriteLine("Settling red team");
         List<int> filledSlots = _loop.Cg.RedSlots;
-        Console.WriteLine($"red filled slots {filledSlots}.");
         for (int i = 0; i < filledSlots.Count; i++)
         {
             if (filledSlots[i] != i + 6)

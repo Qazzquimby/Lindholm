@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using Deltin.CustomGameAutomation;
 
@@ -71,6 +70,7 @@ internal class First30SecondsPhase : Phase
         _timer = 0;
         Program.RemoveBots();
         Program.ScrambleTeams();
+        Program.ChatStartMessages();
     }
 
     public First30SecondsPhase(CustomGame cg, Config cfg) : base(cg, cfg)
@@ -83,9 +83,15 @@ internal class GamePhase : Phase
     public override Dictionary<int, List<Action>> LoopFuncs { get; set; } = new Dictionary<int, List<Action>>()
     {
         {
+            600, new List<Action>()
+            {
+                Program.ChatFewPlayersMessageIfFewPlayers
+            }
+        },
+        {
             30, new List<Action>()
             {
-                Program.PrintRunningTrace,
+//                Program.PrintRunningTrace,
                 Program.HandleBots
             }
         },
@@ -157,11 +163,12 @@ internal class RunningGameEndingPhase : Phase
     private static void SkipPostGame()
     {
         int waitTimer = 0;
-        while (_cg.GetGameState() != GameState.Ending_Commend && waitTimer < 20)
+        int maxWait = 20;
+        while (_cg.GetGameState() != GameState.Ending_Commend && waitTimer < maxWait)
         {
             Thread.Sleep(1000);
             waitTimer++;
-            Console.WriteLine($"{waitTimer} seconds wait");
+            Console.WriteLine($"{maxWait - waitTimer} seconds remaining");
         }
 
         Program.NextMap();
