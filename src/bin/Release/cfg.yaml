@@ -20,7 +20,7 @@ StartMessage1st:
 StartMessage2nd:
 
 #Printed when a player joins the server if there are 3 or fewer players after joining.
-FewPlayerMessage:
+FewPlayersMessage:
 
 #Printed to match chat at the end of each game, before the play of the game.
 EndMessage1st: This server is powered by Lindholm, and should be running 24/7.

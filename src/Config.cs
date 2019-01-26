@@ -28,29 +28,31 @@ public class Config
 
     private YamlMappingNode _mapping;
 
+    private readonly string REPLACE_WITH_PRESET_NAME_STRING = "REPLACE ME WITH THE NAME OF YOUR PRESET";
+
     public Config()
     {
         InitMapping();
-        BattlenetExecutableFilePath = InitField("BattlenetExecutableFilePath");
-        OverwatchSettingsFilePath = InitFieldOrFallback("OverwatchSettingsFilePath", @"C:\Users\" + Environment.UserName + @"\Documents\Overwatch\Settings\Settings_v0.ini");
-        ServerName = InitField("ServerName");
-        BlueName = InitField("BlueName");
-        RedName = InitField("RedName");
+        BattlenetExecutableFilePath = InitField("BattlenetExecutableFilePath", @"C:\Program Files(x86)\Battle.net\Battle.net.exe");
+        OverwatchSettingsFilePath = InitField("OverwatchSettingsFilePath", @"C:\Users\" + Environment.UserName + @"\Documents\Overwatch\Settings\Settings_v0.ini");
+        ServerName = InitField("ServerName", "Unnamed Lindholm Server");
+        BlueName = InitField("BlueName", "Blue Team");
+        RedName = InitField("RedName", "Red Team");
 
-        StartMessage1st = InitField("StartMessage1st");
-        StartMessage2nd = InitField("StartMessage2nd");
+        StartMessage1st = InitField("StartMessage1st", "");
+        StartMessage2nd = InitField("StartMessage2nd", "");
 
-        FewPlayersMessage = InitField("FewPlayersMessage");
+        FewPlayersMessage = InitField("FewPlayersMessage", "");
 
-        EndMessage1st = InitField("EndMessage1st");
-        EndMessage2nd = InitField("EndMessage2nd");
+        EndMessage1st = InitField("EndMessage1st", "");
+        EndMessage2nd = InitField("EndMessage2nd", "");
 
 
 
-        NumberPlayersWhenBotsAreRemoved = int.Parse(InitField("NumberPlayersWhenBotsAreRemoved"));
+        NumberPlayersWhenBotsAreRemoved = int.Parse(InitField("NumberPlayersWhenBotsAreRemoved", "7"));
 
-        PresetName = InitField("PresetName");
-        if (PresetName == "REPLACE ME WITH THE NAME OF YOUR PRESET")
+        PresetName = InitField("PresetName", REPLACE_WITH_PRESET_NAME_STRING);
+        if (PresetName == REPLACE_WITH_PRESET_NAME_STRING)
         {
             Console.WriteLine("!!! You must set the value of PresetName in cfg.yaml for Lindholm to load your preset.");
         }
@@ -79,7 +81,7 @@ public class Config
         _mapping = (YamlMappingNode) yaml.Documents[0].RootNode;
     }
 
-    private string InitFieldOrFallback(string fieldName, string fallback)
+    private string InitField(string fieldName, string fallback)
     {
         try
         {
@@ -87,6 +89,7 @@ public class Config
         }
         catch (KeyNotFoundException)
         {
+            Console.WriteLine($"{fieldName} config not found. Defaulting to '{fallback}'.");
             return fallback;
         }
     }
@@ -100,18 +103,27 @@ public class Config
     {
         List<Tuple<AIHero, Difficulty>> bots = new List<Tuple<AIHero, Difficulty>>();
 
-        var botsNode = (YamlSequenceNode) _mapping.Children[new YamlScalarNode("Bots")];
-        foreach (YamlMappingNode bot in botsNode)
+        try
         {
-            string heroString = (string) bot.Children[new YamlScalarNode("Hero")];
-            AIHero hero = StringToHero(heroString);
+            var botsNode = (YamlSequenceNode) _mapping.Children[new YamlScalarNode("Bots")];
+            foreach (YamlMappingNode bot in botsNode)
+            {
+                string heroString = (string)bot.Children[new YamlScalarNode("Hero")];
+                AIHero hero = StringToHero(heroString);
 
-            string difficultyString = (string) bot.Children[new YamlScalarNode("Difficulty")];
-            Difficulty difficulty = StringToDifficulty(difficultyString);
+                string difficultyString = (string)bot.Children[new YamlScalarNode("Difficulty")];
+                Difficulty difficulty = StringToDifficulty(difficultyString);
 
-            Tuple<AIHero, Difficulty> botTuple = new Tuple<AIHero, Difficulty>(hero, difficulty);
-            bots.Add(botTuple);
+                Tuple<AIHero, Difficulty> botTuple = new Tuple<AIHero, Difficulty>(hero, difficulty);
+                bots.Add(botTuple);
+            }
+
         }
+        catch (KeyNotFoundException)
+        {
+            Console.WriteLine("No valid bot config found. No bots will be added. See example bot config in cfg.yaml.");
+        }
+
 
         return bots;
     }
