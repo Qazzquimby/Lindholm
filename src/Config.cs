@@ -26,6 +26,8 @@ public class Config
     public readonly string RedName;
     public readonly string ServerName;
 
+    public readonly bool Debug;
+
     private YamlMappingNode _mapping;
 
     private readonly string REPLACE_WITH_PRESET_NAME_STRING = "REPLACE ME WITH THE NAME OF YOUR PRESET";
@@ -62,6 +64,9 @@ public class Config
         {
             throw new BotsMayNotAllFitException(GetNumTotalBots(), NumberPlayersWhenBotsAreRemoved);
         }
+
+        string DebugString = InitField("Debug", "false");
+        Debug = DebugString == "true";
     }
 
     public int GetNumTotalBots()

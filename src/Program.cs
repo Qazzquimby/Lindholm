@@ -101,8 +101,12 @@ public class Program
 
     public static void ChatFewPlayersMessageIfFewPlayers()
     {
-        if (_loop.Cg.PlayerCount - NumBots > 0)
+        if (_loop.Cg.PlayerCount - NumBots < 3)
         {
+            if (_loop.Cfg.Debug)
+            {
+                Console.WriteLine($"DEBUG: Chat Few Players - player count {_loop.Cg.PlayerCount} - {NumBots} = {_loop.Cg.PlayerCount-NumBots} < 3");
+            }
             ChatFewerPlayersMessage();
         }
     }
@@ -114,8 +118,11 @@ public class Program
 
     public static void PrintRunningTrace()
     {
-//        Console.WriteLine("...Running...");
-        Console.WriteLine($"DEBUG: Blue size: {_loop.Cg.BlueCount}, Red size {_loop.Cg.RedCount}");
+        //        Console.WriteLine("...Running...");
+        if (_loop.Cfg.Debug)
+        {
+            Console.WriteLine($"DEBUG: Blue size: {_loop.Cg.BlueCount}, Red size {_loop.Cg.RedCount}");
+        }
     }
 
     public static void PreventMapTimeout()
@@ -162,8 +169,9 @@ public class Program
             smallerTeamSlots = _loop.Cg.BlueSlots;
             smallerTeam = Team.Blue;
         }
-
+        Thread.Sleep(5000);
         ScrambleEvenPortionsOfTeams(smallerTeamSlots, greaterTeamSlots);
+        Thread.Sleep(3000);
         ScrambleUnevenPortionsOfTeams(smallerTeamSlots, greaterTeamSlots, smallerTeam);
     }
 
