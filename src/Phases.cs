@@ -68,7 +68,6 @@ internal class First30SecondsPhase : Phase
     {
         Console.WriteLine("First30Seconds phase");
         _timer = 0;
-        Program.RemoveBots();
         Program.ScrambleTeams();
         Program.ChatStartMessages();
     }
@@ -91,7 +90,7 @@ internal class GamePhase : Phase
         {
             30, new List<Action>()
             {
-//                Program.PrintRunningTrace,
+                Program.PrintRunningTrace,
                 Program.HandleBots
             }
         },

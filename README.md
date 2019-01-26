@@ -9,6 +9,8 @@ At this time, Lindholm can:
 
 With more features in development, including custom map rotations, discord integration, game logging and analytics.
 
+Learn more at https://discord.gg/XdfYVr9 (and the rest of the readme).
+
 ## Is Lindholm for me?
 
 The current version of Lindholm is designed to run classic Overwatch styled custom games, with the same number of players on each team, and may not function well in boss style servers.  

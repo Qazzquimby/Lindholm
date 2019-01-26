@@ -114,7 +114,8 @@ public class Program
 
     public static void PrintRunningTrace()
     {
-        Console.WriteLine("...Running...");
+//        Console.WriteLine("...Running...");
+        Console.WriteLine($"DEBUG: Blue size: {_loop.Cg.BlueCount}, Red size {_loop.Cg.RedCount}");
     }
 
     public static void PreventMapTimeout()
@@ -145,40 +146,66 @@ public class Program
 
     public static void ScrambleTeams()
     {
-        if (_loop.Cg.PlayerCount > 0)
+        RemoveBots();
+        List<int> greaterTeamSlots;
+        List<int> smallerTeamSlots;
+        Team smallerTeam;
+        if (_blueTeamSizeAdvantage > 0)
         {
-            _loop.Cg.Chat.SendChatMessage(">>Scrambling teams.");
-            SettleBlueTeam();
-            SettleRedTeam();
+            greaterTeamSlots = _loop.Cg.BlueSlots;
+            smallerTeamSlots = _loop.Cg.RedSlots;
+            smallerTeam = Team.Red;
+        }
+        else
+        {
+            greaterTeamSlots = _loop.Cg.RedSlots;
+            smallerTeamSlots = _loop.Cg.BlueSlots;
+            smallerTeam = Team.Blue;
+        }
 
-            ShuffleBlueTeam();
+        ScrambleEvenPortionsOfTeams(smallerTeamSlots, greaterTeamSlots);
+        ScrambleUnevenPortionsOfTeams(smallerTeamSlots, greaterTeamSlots, smallerTeam);
+    }
 
-            int totalRows = Math.Max(_loop.Cg.RedCount, _loop.Cg.BlueCount);
-            int numSwaps = (totalRows + 1) / 2;
-            Console.WriteLine($"num_swaps {numSwaps}.");
 
-            List<int> swappableRows = new List<int>();
-            for (int i = 0; i < totalRows; i++)
-            {
-                swappableRows.Add(i);
-            }
 
-            List<int> rowsToSwap = new List<int>();
-            for (int i = 0; i < numSwaps; i++)
-            {
-                int swappableRowIndex = Rnd.Next(swappableRows.Count);
-                int row = swappableRows[swappableRowIndex];
-                rowsToSwap.Add(row);
-                swappableRows.RemoveAt(swappableRowIndex);
-            }
+    private static void ScrambleEvenPortionsOfTeams(List<int> smallerTeamSlots, List<int> greaterTeamSlots)
+    {
+        //Half of the number of slots that are present on red and on blue, round up.
+        int numToSwap = (smallerTeamSlots.Count + 1) / 2;
 
-            for (int i = 0; i < rowsToSwap.Count; i++)
-            {
-                int row = rowsToSwap[i];
-                _loop.Cg.Interact.Move(row, row + 6);
-            }
+        for (int i = 0; i < numToSwap; i++)
+        {
+            int smallerSlotToSwapIndex = Rnd.Next(smallerTeamSlots.Count);
+            int greaterSlotToSwapIndex = Rnd.Next(greaterTeamSlots.Count);
+            int smallerSlotToSwap = smallerTeamSlots[smallerSlotToSwapIndex];
+            int greaterSlotToSwap = greaterTeamSlots[greaterSlotToSwapIndex];
+            _loop.Cg.Interact.Move(smallerSlotToSwap, greaterSlotToSwap);
+
+            smallerTeamSlots.RemoveAt(smallerSlotToSwapIndex);
+            greaterTeamSlots.RemoveAt(greaterSlotToSwapIndex);
         }
     }
+
+    private static void ScrambleUnevenPortionsOfTeams(List<int> smallerTeamSlots, List<int> greaterTeamSlots, Team smallerTeam)
+    {
+        //Half of the number of slots present that are present on only the larger team.
+        int numToSwap = (greaterTeamSlots.Count - smallerTeamSlots.Count) / 2;
+
+        for (int i = 0; i < numToSwap; i++)
+        {
+            int slotToSwapIndex = Rnd.Next(greaterTeamSlots.Count);
+            int slotToSwap = greaterTeamSlots[slotToSwapIndex];
+            SwapWithEmpty(slotToSwap, smallerTeam);
+
+            greaterTeamSlots.RemoveAt(slotToSwapIndex);
+        }
+    }
+
+
+
+
+
 
 
     private static List<int> EmptyRedSlots()
@@ -342,25 +369,47 @@ public class Program
         if (!GetTeamsAreBalanced())
         {
             List<int> slots;
-            List<int> empties;
+
+            Team emptyTeam;
             if (_blueTeamSizeAdvantage > 0)
             {
                 slots = _loop.Cg.BlueSlots;
-                empties = EmptyRedSlots();
+                emptyTeam = Team.Red;
             }
             else
             {
                 slots = _loop.Cg.RedSlots;
-                empties = EmptyBlueSlots();
+                emptyTeam = Team.Blue;
             }
 
             int randomSlot = slots[Rnd.Next(slots.Count)];
-            if (empties.Count > 0)
-            {
-                int lastEmpty = empties[empties.Count - 1];
-                _loop.Cg.Interact.Move(randomSlot, lastEmpty);
-            }
+            SwapWithEmpty(randomSlot, emptyTeam);
         }
+    }
+
+    public static void SwapWithEmpty(int slot, Team toSwapTo)
+    {
+        List<int> empties;
+        if (toSwapTo == Team.Blue)
+        {
+            empties = EmptyBlueSlots();
+        }
+        else if(toSwapTo == Team.Red)
+        {
+            empties = EmptyRedSlots();
+        }
+        else
+        {
+            throw new ArgumentException("toSwapTo must be Red or Blue");
+        }
+
+        if (empties.Count > 0)
+        {
+            int lastEmpty = empties[empties.Count - 1];
+            _loop.Cg.Interact.Move(slot, lastEmpty);
+        }
+
+
     }
 
 
