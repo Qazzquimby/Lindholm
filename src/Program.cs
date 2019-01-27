@@ -337,7 +337,7 @@ public class Program
             Console.WriteLine($"blue team size advantage {_loop.Cg.BlueCount} vs {_loop.Cg.RedCount}");
             BeginAutoBalance();
         }
-        else if (GetImbalanceAmount() >= 3)
+        else if (GetImbalanceAmount() >= 3 || _loop.Cg.BlueCount == 0 || _loop.Cg.RedCount == 0)
         {
             Console.WriteLine($"blue team size advantage {_loop.Cg.BlueCount} vs {_loop.Cg.RedCount}");
             BeginAutoBalance();
