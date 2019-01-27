@@ -153,6 +153,7 @@ public class Program
 
     public static void ScrambleTeams()
     {
+        Thread.Sleep(5000);
         RemoveBots();
         List<int> greaterTeamSlots;
         List<int> smallerTeamSlots;
@@ -169,7 +170,7 @@ public class Program
             smallerTeamSlots = _loop.Cg.BlueSlots;
             smallerTeam = Team.Blue;
         }
-        Thread.Sleep(5000);
+        
         ScrambleEvenPortionsOfTeams(smallerTeamSlots, greaterTeamSlots);
         Thread.Sleep(3000);
         ScrambleUnevenPortionsOfTeams(smallerTeamSlots, greaterTeamSlots, smallerTeam);
@@ -184,14 +185,24 @@ public class Program
 
         for (int i = 0; i < numToSwap; i++)
         {
-            int smallerSlotToSwapIndex = Rnd.Next(smallerTeamSlots.Count);
-            int greaterSlotToSwapIndex = Rnd.Next(greaterTeamSlots.Count);
-            int smallerSlotToSwap = smallerTeamSlots[smallerSlotToSwapIndex];
-            int greaterSlotToSwap = greaterTeamSlots[greaterSlotToSwapIndex];
-            _loop.Cg.Interact.Move(smallerSlotToSwap, greaterSlotToSwap);
+            try
+            {
+                int smallerSlotToSwapIndex = Rnd.Next(smallerTeamSlots.Count);
+                int greaterSlotToSwapIndex = Rnd.Next(greaterTeamSlots.Count);
+                int smallerSlotToSwap = smallerTeamSlots[smallerSlotToSwapIndex];
+                int greaterSlotToSwap = greaterTeamSlots[greaterSlotToSwapIndex];
+                _loop.Cg.Interact.Move(smallerSlotToSwap, greaterSlotToSwap);
 
-            smallerTeamSlots.RemoveAt(smallerSlotToSwapIndex);
-            greaterTeamSlots.RemoveAt(greaterSlotToSwapIndex);
+                smallerTeamSlots.RemoveAt(smallerSlotToSwapIndex);
+                greaterTeamSlots.RemoveAt(greaterSlotToSwapIndex);
+            }
+            catch(IndexOutOfRangeException)
+            {
+                if (_loop.Cfg.Debug)
+                {
+                    Console.WriteLine($"Debug: Index error in scramble even portion of teams.");
+                }
+            }
         }
     }
 
@@ -202,11 +213,21 @@ public class Program
 
         for (int i = 0; i < numToSwap; i++)
         {
-            int slotToSwapIndex = Rnd.Next(greaterTeamSlots.Count);
-            int slotToSwap = greaterTeamSlots[slotToSwapIndex];
-            SwapWithEmpty(slotToSwap, smallerTeam);
+            try
+            {
+                int slotToSwapIndex = Rnd.Next(greaterTeamSlots.Count);
+                int slotToSwap = greaterTeamSlots[slotToSwapIndex];
+                SwapWithEmpty(slotToSwap, smallerTeam);
 
-            greaterTeamSlots.RemoveAt(slotToSwapIndex);
+                greaterTeamSlots.RemoveAt(slotToSwapIndex);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                if (_loop.Cfg.Debug)
+                {
+                    Console.WriteLine($"Debug: Index error in scramble uneven portion of teams.");
+                }
+            }
         }
     }
 
