@@ -103,7 +103,7 @@ public class Program
     {
         if (_loop.Cfg.Debug)
         {
-            Console.WriteLine($"DEBUG: Chat Few Players - player count {_loop.Cg.PlayerCount} - {NumBots} = {_loop.Cg.PlayerCount - NumBots} must be < 3");
+            Console.WriteLine($"DEBUG: Chat Few Players -> player count {_loop.Cg.PlayerCount} - {NumBots} = {_loop.Cg.PlayerCount - NumBots} must be < 3");
         }
 
         if (_loop.Cg.PlayerCount - NumBots < 3)
@@ -198,7 +198,7 @@ public class Program
                 smallerTeamSlots.RemoveAt(smallerSlotToSwapIndex);
                 greaterTeamSlots.RemoveAt(greaterSlotToSwapIndex);
             }
-            catch(IndexOutOfRangeException)
+            catch(ArgumentOutOfRangeException)
             {
                 if (_loop.Cfg.Debug)
                 {
@@ -223,7 +223,7 @@ public class Program
 
                 greaterTeamSlots.RemoveAt(slotToSwapIndex);
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 if (_loop.Cfg.Debug)
                 {
