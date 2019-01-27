@@ -101,12 +101,14 @@ public class Program
 
     public static void ChatFewPlayersMessageIfFewPlayers()
     {
+        if (_loop.Cfg.Debug)
+        {
+            Console.WriteLine($"DEBUG: Chat Few Players - player count {_loop.Cg.PlayerCount} - {NumBots} = {_loop.Cg.PlayerCount - NumBots} must be < 3");
+        }
+
         if (_loop.Cg.PlayerCount - NumBots < 3)
         {
-            if (_loop.Cfg.Debug)
-            {
-                Console.WriteLine($"DEBUG: Chat Few Players - player count {_loop.Cg.PlayerCount} - {NumBots} = {_loop.Cg.PlayerCount-NumBots} < 3");
-            }
+            
             ChatFewerPlayersMessage();
         }
     }
@@ -200,7 +202,7 @@ public class Program
             {
                 if (_loop.Cfg.Debug)
                 {
-                    Console.WriteLine($"Debug: Index error in scramble even portion of teams.");
+                    Console.WriteLine($"DEBUG: Index error in scramble even portion of teams.");
                 }
             }
         }
@@ -225,7 +227,7 @@ public class Program
             {
                 if (_loop.Cfg.Debug)
                 {
-                    Console.WriteLine($"Debug: Index error in scramble uneven portion of teams.");
+                    Console.WriteLine($"DEBUG: Index error in scramble uneven portion of teams.");
                 }
             }
         }
