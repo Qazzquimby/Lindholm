@@ -100,6 +100,9 @@ This problem is usually fixed at the beginning of a new match, or when more play
 
 ## FAQ
 
+- #### It crashes on the main menu with an error saying the menu failed to load, though the menu did load.
+Something about your system is preventing the screenshot method from working. This is currently in development. If enough people announce having this problem on the discord I'll implement a work-around in the mean time.
+
 - #### I want to swap players, or use chat in the automated server.
 This is usually safe to do, though can cause problems if the bot tries to act while you're working. If anything goes wrong, see "Correcting Errors" above.
 
