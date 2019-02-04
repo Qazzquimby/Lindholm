@@ -28,7 +28,7 @@ public class Lindholm
     {
         var log = new LoggerConfiguration().WriteTo.File("Log.txt").CreateLogger();
 
-        bool crash_on_exception = true; //This is changed manually in the source.
+        bool crash_on_exception = false; //This is changed manually in the source.
         // ReSharper disable once ConditionIsAlwaysTrueOrFalse
         if (crash_on_exception)
         {
