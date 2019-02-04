@@ -23,3 +23,7 @@ E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.csproj.CoreCompileInputs.cache
 E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.csproj.CopyComplete
 E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.exe
 E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.pdb
+E:\LifeItself\Lindholm\src\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\LifeItself\Lindholm\src\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.dll
+E:\LifeItself\Lindholm\src\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.xml
+E:\LifeItself\Lindholm\src\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.xml

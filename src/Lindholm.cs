@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Threading;
-using Serilog;
+
+//using Serilog;
 
 public class Lindholm
 {
@@ -17,16 +20,16 @@ public class Lindholm
 
     private void RunForever()
     {
-        while (true)
-        {
+//        while (true) //At least temporarily removed, since this can lead to general chat spam.
+//        {
             RunSafelyIfNotDebug();
-        }
+//        }
     }
 
     [SuppressMessage("ReSharper", "HeuristicUnreachableCode")]
     private void RunSafelyIfNotDebug()
     {
-        var log = new LoggerConfiguration().WriteTo.File("Log.txt").CreateLogger();
+        FileLogger.FilePath = "Debug/Log.txt";
 
         bool crash_on_exception = false; //This is changed manually in the source.
         // ReSharper disable once ConditionIsAlwaysTrueOrFalse
@@ -43,7 +46,7 @@ public class Lindholm
             catch (Exception e)
             {
                 Console.WriteLine("Error:" + e);
-                log.Error(e.ToString());
+                FileLogger.Log(e.ToString());
                 Thread.Sleep(10000);
             }
         } 
@@ -55,4 +58,17 @@ public class Lindholm
         _loop.Run();
     }
 
+}
+
+public class FileLogger
+{
+    public static string FilePath = @"Log.txt";
+    public static void Log(string message)
+    {
+        using (StreamWriter streamWriter = new StreamWriter(FilePath))
+        {
+            streamWriter.WriteLine(message);
+            streamWriter.Close();
+        }
+    }
 }
