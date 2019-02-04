@@ -342,7 +342,7 @@ public class GameManager
         Manipulation = new SlotManipulation(Observation, Cg.Interact);
 
         Bots = new BotManager(cfg, cg.AI, Observation);
-        Scrambler = new TeamScrambler(Cg, Cfg, Bots, Observation);
+        Scrambler = new TeamScrambler(Cg, Cfg, Bots, Observation, Manipulation);
         Autobalancer = new Autobalancer(Cg, Observation, Bots, Manipulation);
 
         Chatter = new Chatter(Cg.Chat, Cfg, Observation, Bots);

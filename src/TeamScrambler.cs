@@ -11,12 +11,13 @@ public class TeamScrambler
     private SlotObservation _observation;
     private SlotManipulation _manipulation;
 
-    public TeamScrambler(CustomGame cg, Config cfg, BotManager bots, SlotObservation observation)
+    public TeamScrambler(CustomGame cg, Config cfg, BotManager bots, SlotObservation observation, SlotManipulation manipulation)
     {
         _cg = cg;
         _cfg = cfg;
         _bots = bots;
         _observation = observation;
+        _manipulation = manipulation;
     }
 
     public void ScrambleTeams()

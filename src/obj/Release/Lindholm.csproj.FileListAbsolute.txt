@@ -9,3 +9,4 @@ E:\LifeItself\Lindholm\src\obj\Release\Lindholm.csproj.CoreCompileInputs.cache
 E:\LifeItself\Lindholm\src\obj\Release\Lindholm.csproj.CopyComplete
 E:\LifeItself\Lindholm\src\obj\Release\Lindholm.exe
 E:\LifeItself\Lindholm\src\obj\Release\Lindholm.pdb
+E:\LifeItself\Lindholm\src\obj\Release\Lindholm.csprojAssemblyReference.cache
