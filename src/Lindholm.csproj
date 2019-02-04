@@ -82,6 +82,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Deltin.CustomGameAutomation bin\Deltin.CustomGameAutomation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>packages\Serilog.2.8.0\lib\net46\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
@@ -91,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chatter.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DebugUtils.cs" />
     <Compile Include="GameLoop.cs" />
@@ -100,6 +108,7 @@
     <Compile Include="Phases.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="TeamScrambler.cs" />
     <EmbeddedResource Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using Serilog;
 
 public class Lindholm
 {
@@ -21,9 +23,14 @@ public class Lindholm
         }
     }
 
+    [SuppressMessage("ReSharper", "HeuristicUnreachableCode")]
     private void RunSafelyIfNotDebug()
     {
-        if (_cfg.Debug)
+        var log = new LoggerConfiguration().WriteTo.File("Log.txt").CreateLogger();
+
+        bool crash_on_exception = true; //This is changed manually in the source.
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+        if (crash_on_exception)
         {
             Run();
         }
@@ -36,6 +43,7 @@ public class Lindholm
             catch (Exception e)
             {
                 Console.WriteLine("Error:" + e);
+                log.Error(e.ToString());
                 Thread.Sleep(10000);
             }
         } 

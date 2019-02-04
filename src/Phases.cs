@@ -111,7 +111,7 @@ internal class First30SecondsPhase : Phase
             {
                 5, new List<Action>
                 {
-                    ScrambleIfImbalance
+                    _game.Scrambler.SwapIfImbalance
                 }
             }
         };
@@ -127,10 +127,6 @@ internal class First30SecondsPhase : Phase
         {
             EnterPhase(typeof(GamePhase));
         }
-    }
-
-    private void ScrambleIfImbalance()
-    {
     }
 
     public override void Enter()
