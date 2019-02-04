@@ -1,20 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Deltin.CustomGameAutomation;
+
+public class PhaseRunner
+{
+    private readonly GameManager _game;
+    private Phase _currentPhase;
+    private int _timeCounter = 0;
+
+    public PhaseRunner(Type firstPhase, GameManager game)
+    {
+        _game = game;
+
+        _game.Match.OnNextMap += EnterFirst30SecondsPhase;
+        _game.Cg.OnGameOver += EnterRunningGameEndingPhase;
+
+        EnterPhase(firstPhase);
+    }
+
+    public void RunForever()
+    {
+        while (true)
+        {
+            Run();
+        }
+    }
+
+    public void EnterPhase(Type newPhase)
+    {
+        _currentPhase?.Exit();
+
+        var paramArray = new object[] {_game, (Action<Type>) EnterPhase};
+        _currentPhase = (Phase) Activator.CreateInstance(newPhase, paramArray);
+        _currentPhase.Enter();
+    }
+
+
+    private void EnterFirst30SecondsPhase(object sender, EventArgs e)
+    {
+        EnterPhase(typeof(First30SecondsPhase));
+    }
+
+
+    private void EnterRunningGameEndingPhase(object sender, EventArgs e)
+    {
+        EnterPhase(typeof(RunningGameEndingPhase));
+    }
+
+
+    private void Run()
+    {
+        foreach (int delay in _currentPhase.LoopFuncs.Keys)
+        {
+            if (_timeCounter % delay == 0)
+            {
+                try
+                {
+                    foreach (Action func in _currentPhase.LoopFuncs[delay])
+                    {
+                        func();
+                    }
+                }
+                catch (KeyNotFoundException)
+                {
+                }
+            }
+        }
+
+        _timeCounter += 1;
+        Thread.Sleep(500);
+    }
+}
 
 public abstract class Phase
 {
-    public virtual Dictionary<int, List<Action>> LoopFuncs { get; set; }
+    protected GameManager _game;
+    protected Action<Type> EnterPhase;
 
-    protected static CustomGame _cg;
-    protected static Config _cfg;
-
-    protected Phase(CustomGame cg, Config cfg)
+    protected Phase(GameManager game, Action<Type> enterPhase)
     {
-        _cg = cg;
-        _cfg = cfg;
+        _game = game;
+        EnterPhase = enterPhase;
     }
+
+    public abstract Dictionary<int, List<Action>> LoopFuncs { get; }
 
     public virtual void Enter()
     {
@@ -27,163 +96,131 @@ public abstract class Phase
 
 internal class First30SecondsPhase : Phase
 {
-    private static int _timer = 0;
+    private int _timer = 0;
 
-    public override Dictionary<int, List<Action>> LoopFuncs { get; set; } = new Dictionary<int, List<Action>>()
+    public First30SecondsPhase(GameManager game, Action<Type> enterPhase) : base(game, enterPhase)
     {
+        LoopFuncs = new Dictionary<int, List<Action>>
         {
-            1, new List<Action>()
             {
-                IncrementTimer
-            }
-        },
-        {
-            5, new List<Action>()
+                1, new List<Action>
+                {
+                    IncrementTimer
+                }
+            },
             {
-                ScrambleIfImbalance
+                5, new List<Action>
+                {
+                    ScrambleIfImbalance
+                }
             }
-        },
-    };
+        };
+    }
 
-    private static void IncrementTimer()
+    public override Dictionary<int, List<Action>> LoopFuncs { get; }
+
+
+    private void IncrementTimer()
     {
         _timer++;
         if (_timer >= 30)
         {
-            Program.EnterPhase(typeof(GamePhase));
+            EnterPhase(typeof(GamePhase));
         }
     }
 
-    private static void ScrambleIfImbalance()
+    private void ScrambleIfImbalance()
     {
-        int blueTeamSizeAdvantage = Program.GetBlueTeamSizeAdvantage();
-        if (Math.Abs(blueTeamSizeAdvantage) >= 2)
-        {
-            Console.WriteLine("Evening teams");
-            Program.SwapToBalance();
-        }
     }
 
     public override void Enter()
     {
         Console.WriteLine("First30Seconds phase");
         _timer = 0;
-        Program.ScrambleTeams();
-        Program.ChatStartMessages();
-    }
-
-    public First30SecondsPhase(CustomGame cg, Config cfg) : base(cg, cfg)
-    {
+        _game.Scrambler.ScrambleTeams();
+        _game.Chatter.ChatStartMessages();
     }
 }
 
 internal class GamePhase : Phase
 {
-    public override Dictionary<int, List<Action>> LoopFuncs { get; set; } = new Dictionary<int, List<Action>>()
+    public GamePhase(GameManager game, Action<Type> enterPhase) : base(game, enterPhase)
     {
+        LoopFuncs = new Dictionary<int, List<Action>>
         {
-            600, new List<Action>()
             {
-                Program.ChatFewPlayersMessageIfFewPlayers
-            }
-        },
-        {
-            30, new List<Action>()
+                600, new List<Action>
+                {
+                    _game.Chatter.ChatFewPlayersMessageIfFewPlayers
+                }
+            },
             {
-                Program.PrintRunningTrace,
-                Program.HandleBots
-            }
-        },
-        {
-            15, new List<Action>()
+                30, new List<Action>
+                {
+                    _game.PrintRunningTrace,
+                    _game.Bots.HandleBots
+                }
+            },
             {
-                Program.HandleAutoBalance,
-            }
-        },
-        {
-            1, new List<Action>()
+                15, new List<Action>
+                {
+                    _game.Autobalancer.HandleAutoBalance
+                }
+            },
             {
-                HandleGameOver,
-                HandleMissedGameOver,
-                Program.PreventMapTimeout,
-                Program.PerformAutoBalance
+                1, new List<Action>
+                {
+                    _game.Match.HandleMissedGameOver,
+                    _game.Match.PreventMapTimeout,
+                    _game.Autobalancer.PerformAutoBalance
+                }
             }
+        };
+
         }
-    };
+
+    public override Dictionary<int, List<Action>> LoopFuncs { get; }
 
 
-    private static void HandleGameOver()
-    {
-        if (Program.GameEnded)
-        {
-            Program.EnterPhase(typeof(RunningGameEndingPhase));
-        }
-    }
 
-    private static void HandleMissedGameOver()
-    {
-        if (_cg.GetGameState() == GameState.Ending_Commend)
-        {
-            Program.GameOver();
-            Program.NextMap();
-        }
-    }
+
 
     public override void Enter()
     {
         Console.WriteLine("game phase");
-        Program.TimeAtCurrentMap = 60;
-        _cg.Chat.JoinChannel(Channel.Match);
+        _game.Chatter.JoinMatchChat();
     }
 
     public override void Exit()
     {
         Console.WriteLine("leaving game phase");
     }
-
-    public GamePhase(CustomGame cg, Config cfg) : base(cg, cfg)
-    {
-    }
-};
+}
 
 internal class RunningGameEndingPhase : Phase
 {
-    public override Dictionary<int, List<Action>> LoopFuncs { get; set; } = new Dictionary<int, List<Action>>()
+    public RunningGameEndingPhase(GameManager game, Action<Type> enterPhase) : base(game, enterPhase)
     {
+        LoopFuncs = new Dictionary<int, List<Action>>
         {
-            1, new List<Action>()
             {
-                SkipPostGame
+                1, new List<Action>
+                {
+                    _game.Match.SkipPostGame
+                }
             }
-        }
-    };
-
-
-    private static void SkipPostGame()
-    {
-        int waitTimer = 0;
-        int maxWait = 20;
-        while (_cg.GetGameState() != GameState.Ending_Commend && waitTimer < maxWait)
-        {
-            Thread.Sleep(1000);
-            waitTimer++;
-            Console.WriteLine($"{maxWait - waitTimer} seconds remaining");
-        }
-
-        Program.NextMap();
+        };
     }
+
+    public override Dictionary<int, List<Action>> LoopFuncs { get; }
 
     public override void Enter()
     {
         Console.WriteLine("game ending phase");
-        Program.GameOver();
     }
+
 
     public override void Exit()
-    {
-    }
-
-    public RunningGameEndingPhase(CustomGame cg, Config cfg) : base(cg, cfg)
     {
     }
 }

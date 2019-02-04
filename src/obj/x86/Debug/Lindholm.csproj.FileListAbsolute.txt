@@ -16,7 +16,6 @@ E:\LifeItself\Lindholm\src\bin\Debug\Lindholm.exe
 E:\LifeItself\Lindholm\src\bin\Debug\Lindholm.pdb
 E:\LifeItself\Lindholm\src\bin\Debug\Deltin.CustomGameAutomation.dll
 E:\LifeItself\Lindholm\src\bin\Debug\YamlDotNet.dll
-E:\LifeItself\Lindholm\src\bin\Debug\Deltin.CustomGameAutomation.pdb
 E:\LifeItself\Lindholm\src\bin\Debug\Deltin.CustomGameAutomation.xml
 E:\LifeItself\Lindholm\src\bin\Debug\YamlDotNet.xml
 E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.csprojAssemblyReference.cache

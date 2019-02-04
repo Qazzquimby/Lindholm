@@ -1,24 +1,29 @@
-﻿BattlenetExecutableFilePath: C:\Program Files (x86)\Battle.net\Battle.net.exe
+﻿## REQUIRED confirm the battlenet path.
+BattlenetExecutableFilePath: E:\Program Files (x86)\Battle.net\Battle.net.exe
 
-#Uncomment and set this if your settings are stored outside of the default location.
+## REQUIRED If your overwatch settings are not at this path, remove the "#" at the beginning of the next line and set to the correct path.
 #OverwatchSettingsFilePath: C:\Users\YOUR_USER\Documents\Overwatch\Settings\Settings_v0.ini
 
-
+##IMPORTANT
 ServerName: Unnamed Lindholm Server
+
+##IMPORTANT
+#The name of the preset you want to load.
+PresetName: Unreal Amplified
 
 #Team names
 BlueName: Blue Team
 RedName: Red Team
 
-#The index of the settings preset you want to load. Locations start at 0.
-#Layoout:
-#0  1  2  3
-#4  5  6  7
-#8  9  10 11
-PresetLocation: 0
+#Printed to match chat at the beginning of each game, after teams are scrambled.
+StartMessage1st: 
+StartMessage2nd:
 
-#Printed at the end of a match
-EndMessage1st: This server is powered by Lindholm, and should be up 24/7.
+#Printed when a player joins the server if there are 3 or fewer players after joining.
+FewPlayersMessage:
+
+#Printed to match chat at the end of each game, before the play of the game.
+EndMessage1st: This server is powered by Lindholm, and should be running 24/7.
 EndMessage2nd: 
 
 #When there are at least this many players, all bots are removed.
@@ -27,8 +32,17 @@ NumberPlayersWhenBotsAreRemoved: 7
 #Each bot listed will be added to both teams when the number of players is less than NumberPlayersWhenBotsAreRemoved.
 #Valid hero names: Ana, Bastion, Lucio, Mccree, Mei, Reaper, Recommended, Roadhog, Soldier76, Sombra, Torbjorn, Zarya, Zenyatta
 #Valid Difficulty names: Easy, Medium, Hard
+#Format example
+#Bots: 
+#  - Hero: Roadhog
+#    Difficulty: Medium
+#  - Hero: Soldier76
+#    Difficulty: Medium
 Bots: 
   - Hero: Roadhog
     Difficulty: Medium
   - Hero: Soldier76
     Difficulty: Medium
+
+
+Debug: true
