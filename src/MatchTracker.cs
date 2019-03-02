@@ -4,7 +4,7 @@ using Deltin.CustomGameAutomation;
 
 public class MatchTracker
 {
-    private DateTime _lastGameOver = DateTime.Parse("2017-02-16T00:00:00-0:00");
+    private DateTime _lastMapChange = DateTime.Parse("2017-02-16T00:00:00-0:00");
 
     private readonly Chatter _chat;
     private readonly CustomGame _cg;
@@ -20,7 +20,7 @@ public class MatchTracker
 
     public double PassedSeconds()
     {
-        return DateTime.Now.Subtract(_lastGameOver).TotalSeconds;
+        return DateTime.Now.Subtract(_lastMapChange).TotalSeconds;
     }
 
     public void HandleMissedGameOver()
@@ -66,6 +66,7 @@ public class MatchTracker
     public void NextMap()
     {
         Console.WriteLine("Next map");
+        _lastMapChange = DateTime.Now;
         _cg.RestartGame();
         OnNextMap?.Invoke(this, EventArgs.Empty);
     }
@@ -83,7 +84,6 @@ public class MatchTracker
 
     public void GameOver()
     {
-        _lastGameOver = DateTime.Now;
         Console.WriteLine("running game over");
         _chat.ChatEndMessages();
     }

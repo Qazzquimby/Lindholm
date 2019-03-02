@@ -5,13 +5,14 @@ using Deltin.CustomGameAutomation;
 
 public class TeamScrambler
 {
-    private Config _cfg;
-    private CustomGame _cg;
-    private BotManager _bots;
-    private SlotObservation _observation;
-    private SlotManipulation _manipulation;
+    private readonly BotManager _bots;
+    private readonly Config _cfg;
+    private readonly CustomGame _cg;
+    private readonly SlotManipulation _manipulation;
+    private readonly SlotObservation _observation;
 
-    public TeamScrambler(CustomGame cg, Config cfg, BotManager bots, SlotObservation observation, SlotManipulation manipulation)
+    public TeamScrambler(CustomGame cg, Config cfg, BotManager bots, SlotObservation observation,
+        SlotManipulation manipulation)
     {
         _cg = cg;
         _cfg = cfg;
@@ -22,7 +23,7 @@ public class TeamScrambler
 
     public void ScrambleTeams()
     {
-        Thread.Sleep(2000);
+        Thread.Sleep(5000);
         _bots.RemoveBots();
         Thread.Sleep(2000);
         List<int> greaterTeamSlots;
@@ -78,7 +79,8 @@ public class TeamScrambler
     private void ScrambleUnevenPortionsOfTeams(List<int> smallerTeamSlots, List<int> greaterTeamSlots, Team smallerTeam)
     {
         //Half of the number of slots present that are present on only the larger team.
-        int numToSwap = (greaterTeamSlots.Count - smallerTeamSlots.Count - 1) / 2 + 1; // Rounds up.
+        int playerDifference = greaterTeamSlots.Count - smallerTeamSlots.Count;
+        int numToSwap = (int) Math.Ceiling((double) playerDifference / 2);
 
         for (int i = 0; i < numToSwap; i++)
         {

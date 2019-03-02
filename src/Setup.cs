@@ -10,19 +10,30 @@ public abstract class CustomGameBuilder
 {
     public abstract Type FirstPhase { get; }
     public abstract GameManager CreateGame();
+    protected Config Cfg;
+
+    protected void SetupNames(CustomGame cg)
+    {
+        cg.Settings.SetGameName(Cfg.ServerName);
+
+        //        Cg.Settings.SetTeamName(Team.Blue, $@"\ {Cfg.BlueName}");
+        //        Cg.Settings.SetTeamName(Team.Red, $"* {Cfg.RedName}");
+
+        cg.Settings.SetTeamName(Team.Blue, Cfg.BlueName);
+        cg.Settings.SetTeamName(Team.Red, Cfg.RedName);
+    }
 }
 
 
 public class OverwatchIsClosedCustomGameBuilder : CustomGameBuilder
 {
-    private readonly Config _cfg;
     private CustomGame _cg;
 
     public override Type FirstPhase { get; } = typeof(First30SecondsPhase);
 
     public OverwatchIsClosedCustomGameBuilder(Config cfg)
     {
-        _cfg = cfg;
+        Cfg = cfg;
     }
 
     
@@ -33,7 +44,7 @@ public class OverwatchIsClosedCustomGameBuilder : CustomGameBuilder
         CustomGame cg = new CustomGameFromProcessCreator().Run(process);
         _cg = cg;
         SetupCustomGame();
-        GameManager game = new GameManager(_cg, _cfg);
+        GameManager game = new GameManager(_cg, Cfg);
         return game;
     }
 
@@ -42,9 +53,9 @@ public class OverwatchIsClosedCustomGameBuilder : CustomGameBuilder
     {
         var info = new OverwatchInfoAuto
         {
-            BattlenetExecutableFilePath = _cfg.BattlenetExecutableFilePath,
-            OverwatchSettingsFilePath = _cfg.OverwatchSettingsFilePath,
-            MaxOverwatchStartTime = 60000
+            BattlenetExecutableFilePath = Cfg.BattlenetExecutableFilePath,
+            OverwatchSettingsFilePath = Cfg.OverwatchSettingsFilePath,
+            MaxOverwatchStartTime = -1
         };
         Process process = CreateNewOverwatchProcessFromInfo(info);
         return process;
@@ -69,18 +80,12 @@ public class OverwatchIsClosedCustomGameBuilder : CustomGameBuilder
 
     private void SetupCustomGame()
     {
+        SetupNames(_cg);
         _cg.Settings.JoinSetting = Join.Everyone;
-        _cg.Settings.SetGameName(_cfg.ServerName);
-
-        //        Cg.Settings.SetTeamName(Team.Blue, $@"\ {Cfg.BlueName}");
-        //        Cg.Settings.SetTeamName(Team.Red, $"* {Cfg.RedName}");
-
-        _cg.Settings.SetTeamName(Team.Blue, _cfg.BlueName);
-        _cg.Settings.SetTeamName(Team.Red, _cfg.RedName);
 
         SwapHostToSpectate();
 
-        _cg.Settings.LoadPreset(_cfg.PresetName);
+        _cg.Settings.LoadPreset(Cfg.PresetName);
         _cg.Chat.SwapChannel(Channel.Match);
 
         _cg.StartGame();
@@ -98,11 +103,9 @@ public class OverwatchIsOpenCustomGameBuilder : CustomGameBuilder
 {
     public override Type FirstPhase { get; } = typeof(GamePhase);
 
-    private readonly Config _cfg;
-
     public OverwatchIsOpenCustomGameBuilder(Config cfg)
     {
-        _cfg = cfg;
+        Cfg = cfg;
     }
 
     public override GameManager CreateGame()
@@ -110,12 +113,13 @@ public class OverwatchIsOpenCustomGameBuilder : CustomGameBuilder
         Process process = CustomGame.GetOverwatchProcess();
         CustomGame cg = new CustomGameFromProcessCreator().Run(process);
         CustomGameSetup(cg);
-        GameManager game = new GameManager(cg, _cfg);
+        GameManager game = new GameManager(cg, Cfg);
         return game;
     }
 
     private void CustomGameSetup(CustomGame cg)
     {
+        SetupNames(cg);
         cg.AI.RemoveAllBotsAuto();
         cg.Chat.SwapChannel(Channel.Match);
     }
