@@ -9,12 +9,14 @@ public class BotManager
     private readonly Config _cfg;
     private readonly AI _ai;
     private readonly SlotObservation _observation;
+    private readonly Resetter _resetter;
 
-    public BotManager(Config cfg, AI ai, SlotObservation observation)
+    public BotManager(Config cfg, AI ai, SlotObservation observation, Resetter resetter)
     {
         _cfg = cfg;
         _ai = ai;
         _observation = observation;
+        _resetter = resetter;
     }
 
 
@@ -48,6 +50,7 @@ public class BotManager
             }
             NumBots += _cfg.GetNumTotalBots();
         }
+        _resetter.Reset();
     }
 
     public void RemoveBotsIfAny()
@@ -63,6 +66,7 @@ public class BotManager
         _ai.RemoveAllBotsAuto();
         NumBots = 0;
         Console.WriteLine("All bots removed.");
+        _resetter.Reset();
     }
 }
 
@@ -318,6 +322,21 @@ public class Autobalancer
 }
 
 
+public class Resetter
+{
+    private CustomGame _cg;
+
+    public Resetter(CustomGame cg)
+    {
+        _cg = cg;
+    }
+
+    public void Reset()
+    {
+        _cg.Reset();
+    }
+}
+
 public class GameManager
 {
     public CustomGame Cg;
@@ -341,7 +360,9 @@ public class GameManager
         Observation = new SlotObservation(cg);
         Manipulation = new SlotManipulation(Observation, Cg.Interact);
 
-        Bots = new BotManager(cfg, cg.AI, Observation);
+        Resetter resetter = new Resetter(Cg);
+
+        Bots = new BotManager(cfg, cg.AI, Observation, resetter);
         Scrambler = new TeamScrambler(Cg, Cfg, Bots, Observation, Manipulation);
         Autobalancer = new Autobalancer(Cg, Observation, Bots, Manipulation);
 

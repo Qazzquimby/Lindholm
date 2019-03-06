@@ -1,0 +1,13 @@
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+   at Deltin.CustomGameAutomation.DirectBitmap.GetPixel(Int32 x, Int32 y)
+   at Deltin.CustomGameAutomation.DirectBitmap.CompareColor(Int32 x, Int32 y, Int32[] color, Int32 fade)
+   at Deltin.CustomGameAutomation.DirectBitmap.CompareColor(Point point, Int32[] color, Int32 fade)
+   at Deltin.CustomGameAutomation.CustomGame.WaitForMainMenu(ScreenshotMethod screenshotMethod, IntPtr hwnd, DirectBitmap bmp, Int32 maxTime)
+   at Deltin.CustomGameAutomation.CustomGame.StartOverwatch(OverwatchInfoAuto processInfo)
+   at OverwatchIsClosedCustomGameBuilder.CreateNewOverwatchProcessFromInfo(OverwatchInfoAuto info)
+   at OverwatchIsClosedCustomGameBuilder.CreateNewOverwatchProcess()
+   at OverwatchIsClosedCustomGameBuilder.CreateGame()
+   at GameLoop.Setup()
+   at GameLoop.Run()
+   at Lindholm.Run()
+   at Lindholm.RunSafelyIfNotDebug()
