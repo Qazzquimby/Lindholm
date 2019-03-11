@@ -85,15 +85,16 @@ This lets you stop and restart the bot without needing to repeat server setup.
 3. **Overwatch must have contrast set to minimum in settings.** This is set automatically during the Full Setup Run.
 
 
-## Correcting Errors
+## Interacting with Overwatch
 
-Lindholm can and likely will fail at some point. Unpredictable menu load times and translucent menus lead can cause a variety of problems.
-If you find Lindholm sitting somewhere other than the Lobby screen: 
+Maybe Lindholm made a mistake (see github issues) or maybe you want to change settings or swap a player.
+Making changes while Lindholm is running can lead to confusion as you and Lindholm wrestle over controlls. 
+
+To make changes safely:
 1. Close Lindholm (the command window, not Overwatch)
-2. Fix any issues caused (usually none).
+2. Make any changes in overwatch.
 3. Navigate back to the lobby screen.
 4. Launch Lindholm, which will start using the Existing Server Run execution.
-We are working to improve stability in these cases.
 
 If you find Lindholm has added too many bots (a result of failing to remove bots), you may choose not to intervene.  
 This problem is usually fixed at the beginning of a new match, or when more players join.
