@@ -27,8 +27,9 @@ public class TeamScrambler
         _bots.RemoveBots();
         Thread.Sleep(2000);
 
-        int redCount = _cg.RedCount;
-        int playerCount = redCount + _cg.BlueCount;
+        int redCount  = _cg.RedCount;
+        int blueCount = _cg.BlueCount;
+        int playerCount = redCount + blueCount;
 
         // List the players randomly
         var distribution = new List<Tuple<float, int>>(playerCount);
@@ -52,6 +53,20 @@ public class TeamScrambler
 
             _cg.Interact.Move(player1, player2);
         }
+
+        // teams were already balanced
+        if (redCount == blueCount)
+            return;
+
+        // exchange the last player to the team with less players
+        int oddPlayer = distribution[playerCount - 1].Item2;
+        Team otherTeam;
+        if (redCount > blueCount)
+            otherTeam = Team.Blue;
+        else
+            otherTeam = Team.Red;
+
+        _manipulation.SwapWithEmpty(oddPlayer, otherTeam);
     }
 
     public void SwapIfImbalance()
