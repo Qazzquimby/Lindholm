@@ -54,19 +54,19 @@ public class TeamScrambler
             _cg.Interact.Move(player1, player2);
         }
 
-        // teams were already balanced
+        // Check if teams were balanced
         if (redCount == blueCount)
             return;
 
-        // exchange the last player to the team with less players
+        // Exchange the odd player out on the list to the team with less players
         int oddPlayer = distribution[playerCount - 1].Item2;
-        Team otherTeam;
+        Team smallerTeam;
         if (redCount > blueCount)
-            otherTeam = Team.Blue;
+            smallerTeam = Team.Blue;
         else
-            otherTeam = Team.Red;
+            smallerTeam = Team.Red;
 
-        _manipulation.SwapWithEmpty(oddPlayer, otherTeam);
+        _manipulation.SwapWithEmpty(oddPlayer, smallerTeam);
     }
 
     public void SwapIfImbalance()
