@@ -40,25 +40,51 @@ public class TeamScrambler
         }
         distribution.Sort(Comparer<Tuple<float, int>>.Default);
 
-        // Swap pairs of players in order of listing
-        for (var i = 0; i < playerCount - playerCount % 2; i += 2)
+        // First half is team red, second half is team blue
+        var swapToRed = new Stack<int>();
+        var swapToBlue = new Stack<int>();
+        int halfCount = (playerCount - playerCount % 2) / 2;
+        for (var i = 0; i < playerCount - playerCount % 2; i++)
         {
-            int player1 = distribution[i + 0].Item2;
-            int player2 = distribution[i + 1].Item2;
+            int player = distribution[i].Item2;
+            if (i < halfCount)
+            { // Team Red
+                if (player >= redCount)
+                    swapToRed.Push(player);
+            }
+            else
+            { // Team Blue
+                if (player < redCount)
+                    swapToBlue.Push(player);
+            }
+        }
 
-            bool bothRed = player1 < redCount && player2 < redCount;
-            bool bothBlue = player1 >= redCount && player2 >= redCount;
-            if (bothRed || bothBlue)
-                continue;
+        // Swap players between teams
+        while (swapToRed.Count > 1 && swapToBlue.Count > 1)
+        {
+            _cg.Interact.Move(swapToRed.Pop(), swapToBlue.Pop());
+        }
 
-            _cg.Interact.Move(player1, player2);
+        // Swap to team Red first to keep Red player's indexes in order
+        while (swapToRed.Count > 1)
+            _manipulation.SwapWithEmpty(swapToRed.Pop(), Team.Red);
+
+        // Swap to team Blue starting with the largest indexed Red player to preserve ordering
+        List<int> swapToBlueList = new List<int>(swapToBlue.ToArray());
+        swapToBlueList.Sort((a, b) => -1*a.CompareTo(b));
+        while (swapToBlueList.Count > 1)
+        {
+            int index = swapToBlue.Count - 1;
+            int player = swapToBlueList[index];
+            swapToBlueList.RemoveAt(index);
+            _manipulation.SwapWithEmpty(player, Team.Blue);
         }
 
         // Check if teams were balanced
-        if (redCount == blueCount)
+        if (playerCount % 2 == 0)
             return;
 
-        // Exchange the odd player out on the list to the team with less players
+        // Exchange the odd player out on the list to the team previously with less players
         int oddPlayer = distribution[playerCount - 1].Item2;
         Team smallerTeam;
         if (redCount > blueCount)
