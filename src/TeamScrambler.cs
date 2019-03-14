@@ -71,7 +71,7 @@ public class TeamScrambler
 
         // Swap to team Blue starting with the largest indexed Red player to preserve ordering
         List<int> swapToBlueList = new List<int>(swapToBlue.ToArray());
-        swapToBlueList.Sort((a, b) => -1*a.CompareTo(b));
+        swapToBlueList.Sort(Comparer<int>.Default);
         while (swapToBlueList.Count > 1)
         {
             int index = swapToBlue.Count - 1;
