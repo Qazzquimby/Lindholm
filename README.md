@@ -66,6 +66,7 @@ Lindholm can be run in two ways, for convenience.
 
 #### Full Setup Run
 
+**This is currently unstable, and not recommended.**
 This run is triggered when Lindholm is launched while Overwatch is closed.
 This will launch Overwatch, set up your custom game, and run the game.
 1. Configuration must be complete.  
@@ -80,6 +81,7 @@ This lets you stop and restart the bot without needing to repeat server setup.
 
 1. Configuration must be complete.
 2. Overwatch must be open, with a custom server running.
+2. Overwatch must be windowed. Alt-Enter switches to windowed mode.
 2. A game must be currently ongoing. The game can't be waiting in the lobby.
 3. Overwatch must be viewing the server's lobby screen. The lobby screen is reached from the main pause screen through esc -> show lobby.
 3. **Overwatch must have contrast set to minimum in settings.** This is set automatically during the Full Setup Run.
