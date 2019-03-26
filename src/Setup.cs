@@ -83,17 +83,34 @@ public class OverwatchIsClosedCustomGameBuilder : CustomGameBuilder
     private void SetupCustomGame()
     {
         SetupNames(_cg);
-        _cg.Settings.JoinSetting = Join.Everyone;
+        _cg.Settings.JoinSetting = Cfg.ServerVisibility;
 
         SwapHostToSpectate();
 
-        Console.WriteLine("Waiting 15s for more stable load.");
-        Thread.Sleep(15*100);
+//        Console.WriteLine("Waiting 15s for more stable load.");
+//        Thread.Sleep(15*1000);       
 
-        _cg.Settings.LoadPreset(Cfg.PresetName);
+        SafelyLoadPreset();
 
         _cg.StartGame();
         _cg.Chat.SwapChannel(Channel.Match);
+    }
+
+    private void SafelyLoadPreset()
+    {
+        bool success = false;
+        int attempts = 0;
+
+        while (!success)
+        {
+            Console.WriteLine($"Attempting to load preset named {Cfg.PresetName}");
+            success = _cg.Settings.LoadPreset(Cfg.PresetName);
+            attempts++;
+            if (attempts > 15)
+            {
+                return;
+            }
+        }
     }
 
     private void SwapHostToSpectate()

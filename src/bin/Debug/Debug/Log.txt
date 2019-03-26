@@ -1,0 +1,17 @@
+3/26/2019 12:45:09 PM
+Deltin.CustomGameAutomation.OverwatchClosedException: Overwatch was closed.
+   at Deltin.CustomGameAutomation.CustomGame.Validate(IntPtr hwnd)
+   at Deltin.CustomGameAutomation.CustomGame.UpdateScreen()
+   at Deltin.CustomGameAutomation.CustomGame.CheckRange(Int32 min, Int32 max, Int32 yoffset, Boolean noUpdate)
+   at Deltin.CustomGameAutomation.CustomGame.get_RedCount()
+   at TeamScrambler.ScrambleTeams() in E:\LifeItself\Lindholm\src\TeamScrambler.cs:line 30
+   at First30SecondsPhase.Enter() in E:\LifeItself\Lindholm\src\Phases.cs:line 136
+   at PhaseRunner.EnterPhase(Type newPhase) in E:\LifeItself\Lindholm\src\Phases.cs:line 35
+   at PhaseRunner..ctor(Type firstPhase, GameManager game) in E:\LifeItself\Lindholm\src\Phases.cs:line 18
+   at GameLoop.Setup() in E:\LifeItself\Lindholm\src\GameLoop.cs:line 42
+   at GameLoop.Run() in E:\LifeItself\Lindholm\src\GameLoop.cs:line 21
+   at Lindholm.Run() in E:\LifeItself\Lindholm\src\Lindholm.cs:line 58
+   at Lindholm.RunSafelyIfNotDebug() in E:\LifeItself\Lindholm\src\Lindholm.cs:line 43
+
+
+

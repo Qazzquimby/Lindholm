@@ -322,21 +322,6 @@ public class Autobalancer
 }
 
 
-public class Resetter
-{
-    private CustomGame _cg;
-
-    public Resetter(CustomGame cg)
-    {
-        _cg = cg;
-    }
-
-    public void Reset()
-    {
-        _cg.Reset();
-    }
-}
-
 public class GameManager
 {
     public CustomGame Cg;

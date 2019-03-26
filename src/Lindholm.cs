@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Threading;
+using Deltin.CustomGameAutomation;
 
 //using Serilog;
 
 public class Lindholm
 {
     private readonly Config _cfg;
-    private readonly GameLoop _loop;
+    private GameLoop _loop;
 
     public Lindholm()
     {
@@ -43,11 +43,18 @@ public class Lindholm
             {
                 Run();
             }
+            catch (OverwatchClosedException)
+            {
+                Thread.Sleep(15*1000);
+                _loop = new GameLoop(_cfg);
+                RunForever();
+            }
             catch (Exception e)
             {
                 Console.WriteLine("Error:" + e);
                 FileLogger.Log(e.ToString());
-                Thread.Sleep(10000);
+                DebugUtils.Screenshot(DateTime.Now.ToString());
+                Thread.Sleep(15000);
             }
         } 
     }
@@ -58,17 +65,4 @@ public class Lindholm
         _loop.Run();
     }
 
-}
-
-public class FileLogger
-{
-    public static string FilePath = @"Log.txt";
-    public static void Log(string message)
-    {
-        using (StreamWriter streamWriter = new StreamWriter(FilePath))
-        {
-            streamWriter.WriteLine(message);
-            streamWriter.Close();
-        }
-    }
 }

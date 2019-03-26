@@ -26,6 +26,8 @@ public class Config
     public readonly string RedName;
     public readonly string ServerName;
 
+    public readonly Join ServerVisibility;
+
     public readonly bool Debug;
 
     private YamlMappingNode _mapping;
@@ -37,9 +39,12 @@ public class Config
         InitMapping();
         BattlenetExecutableFilePath = InitField("BattlenetExecutableFilePath", @"C:\Program Files(x86)\Battle.net\Battle.net.exe");
         OverwatchSettingsFilePath = InitField("OverwatchSettingsFilePath", @"C:\Users\" + Environment.UserName + @"\Documents\Overwatch\Settings\Settings_v0.ini");
+
         ServerName = InitField("ServerName", "Unnamed Lindholm Server");
         BlueName = InitField("BlueName", "Blue Team");
         RedName = InitField("RedName", "Red Team");
+        ServerVisibility = InitVisibility();
+
 
         StartMessage1st = InitField("StartMessage1st", "");
         StartMessage2nd = InitField("StartMessage2nd", "");
@@ -131,6 +136,29 @@ public class Config
 
 
         return bots;
+    }
+
+    private Join InitVisibility()
+    {
+        string ServerVisibilityString = InitField("ServerVisibility", "Everyone");
+
+        if (ServerVisibilityString.ToLower() == "everyone")
+        {
+            return Join.Everyone;
+        }
+
+        if (ServerVisibilityString.ToLower() == "friends")
+        {
+            return Join.FriendsOnly;
+        }
+
+        if (ServerVisibilityString.ToLower() == "invite")
+        {
+            return Join.InviteOnly;
+        }
+
+        Console.WriteLine("!!! Invalid Visibility. Legal options are: Everyone, Friends, Invite");
+        return Join.Everyone;
     }
 
     private static AIHero StringToHero(string heroString)

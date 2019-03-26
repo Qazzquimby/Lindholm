@@ -94,12 +94,14 @@
     <Compile Include="Chatter.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DebugUtils.cs" />
+    <Compile Include="FileLogger.cs" />
     <Compile Include="GameLoop.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Lindholm.cs" />
     <Compile Include="MatchTracker.cs" />
     <Compile Include="Phases.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Resetter.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="TeamScrambler.cs" />
     <EmbeddedResource Include="Properties\AssemblyInfo.cs" />
