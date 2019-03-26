@@ -55,7 +55,9 @@ public class OverwatchIsClosedCustomGameBuilder : CustomGameBuilder
         {
             BattlenetExecutableFilePath = Cfg.BattlenetExecutableFilePath,
             OverwatchSettingsFilePath = Cfg.OverwatchSettingsFilePath,
-            MaxOverwatchStartTime = -1
+            MaxBattlenetStartTime = -1,
+            MaxWaitForMenuTime = -1,
+            MaxOverwatchStartTime = -1,
         };
         Process process = CreateNewOverwatchProcessFromInfo(info);
         return process;
@@ -85,8 +87,10 @@ public class OverwatchIsClosedCustomGameBuilder : CustomGameBuilder
 
         SwapHostToSpectate();
 
+        Console.WriteLine("Waiting 15s for more stable load.");
+        Thread.Sleep(15*100);
+
         _cg.Settings.LoadPreset(Cfg.PresetName);
-        _cg.Chat.SwapChannel(Channel.Match);
 
         _cg.StartGame();
         _cg.Chat.SwapChannel(Channel.Match);
