@@ -22,4 +22,3 @@ E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.csproj.CoreCompileInputs.cache
 E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.csproj.CopyComplete
 E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.exe
 E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.pdb
-E:\LifeItself\Lindholm\src\obj\x86\Debug\Lindholm.csprojAssemblyReference.cache
