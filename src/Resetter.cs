@@ -12,18 +12,18 @@ public class Resetter
 
     public void Reset()
     {
-        try
-        {
-            OverwatchState state = _cg.Reset();
-            if (state != OverwatchState.Ready)
-            {
-                ExitAndRestart();
-            }
-        }
-        catch (UnknownOverwatchStateException)
-        {
-            ExitAndRestart();
-        }
+//        try
+//        {
+//            OverwatchState state = _cg.Reset();
+//            if (state != OverwatchState.Ready)
+//            {
+//                ExitAndRestart();
+//            }
+//        }
+//        catch (UnknownOverwatchStateException)
+//        {
+//            ExitAndRestart();
+//        }
     }
 
     public void ExitAndRestart()
