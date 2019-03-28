@@ -2,6 +2,7 @@
 BattlenetExecutableFilePath: C:\Program Files (x86)\Battle.net\Battle.net.exe
 
 
+
 ## REQUIRED If your overwatch settings are not at this path, remove the "#" at the beginning of the next line and set to the correct path.
 #OverwatchSettingsFilePath: C:\Users\YOUR_USER\Documents\Overwatch\Settings\Settings_v0.ini
 

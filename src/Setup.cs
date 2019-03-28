@@ -55,9 +55,9 @@ public class OverwatchIsClosedCustomGameBuilder : CustomGameBuilder
         {
             BattlenetExecutableFilePath = Cfg.BattlenetExecutableFilePath,
             OverwatchSettingsFilePath = Cfg.OverwatchSettingsFilePath,
-            MaxBattlenetStartTime = -1,
-            MaxWaitForMenuTime = -1,
-            MaxOverwatchStartTime = -1,
+            MaxBattlenetStartTime = 60*1000,
+            MaxWaitForMenuTime = 60 * 1000,
+            MaxOverwatchStartTime = 60 * 1000,
         };
         Process process = CreateNewOverwatchProcessFromInfo(info);
         return process;
