@@ -12,6 +12,7 @@ public class Resetter
 
     public void Reset()
     {
+        _cg.WaitForSlotUpdate();
 //        try
 //        {
 //            OverwatchState state = _cg.Reset();

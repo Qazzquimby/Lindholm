@@ -66,6 +66,7 @@ public class BotManager
         _ai.RemoveAllBotsAuto();
         NumBots = 0;
         Console.WriteLine("All bots removed.");
+        
         _resetter.Reset();
     }
 }

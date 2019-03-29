@@ -26,73 +26,81 @@ public class TeamScrambler
         Thread.Sleep(5000);
         _bots.RemoveBots();
         Thread.Sleep(2000);
-
-        int redCount  = _cg.RedCount;
-        int blueCount = _cg.BlueCount;
-        int playerCount = redCount + blueCount;
-
-        // List the players randomly
-        var distribution = new List<Tuple<float, int>>(playerCount);
-        Random rnd = new Random();
-        for (var player = 0; player < playerCount; player++)
-        {
-            distribution[player] = new Tuple<float, int>(rnd.Next(), player);
-        }
-        distribution.Sort(Comparer<Tuple<float, int>>.Default);
-
-        // First half is team red, second half is team blue
-        var swapToRed = new Stack<int>();
-        var swapToBlue = new Stack<int>();
-        int halfCount = (playerCount - playerCount % 2) / 2;
-        for (var i = 0; i < playerCount - playerCount % 2; i++)
-        {
-            int player = distribution[i].Item2;
-            if (i < halfCount)
-            { // Team Red
-                if (player >= redCount)
-                    swapToRed.Push(player);
-            }
-            else
-            { // Team Blue
-                if (player < redCount)
-                    swapToBlue.Push(player);
-            }
-        }
-
-        // Swap players between teams
-        while (swapToRed.Count > 1 && swapToBlue.Count > 1)
-        {
-            _cg.Interact.Move(swapToRed.Pop(), swapToBlue.Pop());
-        }
-
-        // Swap to team Red first to keep Red player's indexes in order
-        while (swapToRed.Count > 1)
-            _manipulation.SwapWithEmpty(swapToRed.Pop(), Team.Red);
-
-        // Swap to team Blue starting with the largest indexed Red player to preserve ordering
-        List<int> swapToBlueList = new List<int>(swapToBlue.ToArray());
-        swapToBlueList.Sort(Comparer<int>.Default);
-        while (swapToBlueList.Count > 1)
-        {
-            int index = swapToBlue.Count - 1;
-            int player = swapToBlueList[index];
-            swapToBlueList.RemoveAt(index);
-            _manipulation.SwapWithEmpty(player, Team.Blue);
-        }
-
-        // Check if teams were balanced
-        if (playerCount % 2 == 0)
-            return;
-
-        // Exchange the odd player out on the list to the team previously with less players
-        int oddPlayer = distribution[playerCount - 1].Item2;
+        List<int> greaterTeamSlots;
+        List<int> smallerTeamSlots;
         Team smallerTeam;
-        if (redCount > blueCount)
-            smallerTeam = Team.Blue;
-        else
+        if (_observation.GetBlueTeamSizeAdvantage() > 0)
+        {
+            greaterTeamSlots = _cg.BlueSlots;
+            smallerTeamSlots = _cg.RedSlots;
             smallerTeam = Team.Red;
+        }
+        else
+        {
+            greaterTeamSlots = _cg.RedSlots;
+            smallerTeamSlots = _cg.BlueSlots;
+            smallerTeam = Team.Blue;
+        }
 
-        _manipulation.SwapWithEmpty(oddPlayer, smallerTeam);
+        ScrambleEvenPortionsOfTeams(smallerTeamSlots, greaterTeamSlots);
+        Thread.Sleep(3000);
+        ScrambleUnevenPortionsOfTeams(smallerTeamSlots, greaterTeamSlots, smallerTeam);
+    }
+
+    private void ScrambleEvenPortionsOfTeams(List<int> smallerTeamSlots, List<int> greaterTeamSlots)
+    {
+        //Half of the number of slots that are present on red and on blue, round up.
+        int numToSwap = (smallerTeamSlots.Count + 1) / 2;
+
+        for (int i = 0; i < numToSwap; i++)
+        {
+            try
+            {
+                Random rnd = new Random();
+                int smallerSlotToSwapIndex = rnd.Next(smallerTeamSlots.Count);
+                int greaterSlotToSwapIndex = rnd.Next(greaterTeamSlots.Count);
+                int smallerSlotToSwap = smallerTeamSlots[smallerSlotToSwapIndex];
+                int greaterSlotToSwap = greaterTeamSlots[greaterSlotToSwapIndex];
+                _cg.Interact.Move(smallerSlotToSwap, greaterSlotToSwap);
+
+                smallerTeamSlots.RemoveAt(smallerSlotToSwapIndex);
+                greaterTeamSlots.RemoveAt(greaterSlotToSwapIndex);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                if (_cfg.Debug)
+                {
+                    Console.WriteLine($"DEBUG: Index error in scramble even portion of teams.");
+                }
+            }
+        }
+    }
+
+    private void ScrambleUnevenPortionsOfTeams(List<int> smallerTeamSlots, List<int> greaterTeamSlots, Team smallerTeam)
+    {
+        //Half of the number of slots present that are present on only the larger team.
+        int playerDifference = greaterTeamSlots.Count - smallerTeamSlots.Count;
+        int numToSwap = (int) Math.Ceiling((double) playerDifference / 2);
+
+        for (int i = 0; i < numToSwap; i++)
+        {
+            try
+            {
+                Random rnd = new Random();
+                int slotToSwapIndex = rnd.Next(greaterTeamSlots.Count);
+                int slotToSwap = greaterTeamSlots[slotToSwapIndex];
+                _manipulation.SwapWithEmpty(slotToSwap, smallerTeam);
+
+                greaterTeamSlots.RemoveAt(slotToSwapIndex);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                if (_cfg.Debug)
+                {
+                    Console.WriteLine($"DEBUG: Index error in scramble uneven portion of teams.");
+                }
+            }
+        }
     }
 
     public void SwapIfImbalance()
