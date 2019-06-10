@@ -19,6 +19,7 @@ The current version of Lindholm is not designed to enforce any rules that make u
 
 Outside of these cases, Lindholm is useful for hosts who want to provide a more consistent service with less tedious management.
 
+---
 ## Getting Started
 
 These instructions will get Lindholm configured on your system and running your server.
@@ -31,7 +32,8 @@ These instructions will get Lindholm configured on your system and running your 
 - Optionally an alternate Battlenet account with Overwatch, if you wish to play while the server is running.
 - Optionally a Windows virtual machine. Some systems will require Overwatch be the active window while Lindholm is running, making the computer effectively unusable without a virtual machine.  
 - Optionally an additional copy of Overwatch on a different machine or VM to allow you to play on the custom server while it is being automated.
-
+ 
+---
 ### Installing
 
 Click "Clone or Download" -> Download Zip  
@@ -40,6 +42,7 @@ Extract files anywhere.
 
 Src folder can safely be deleted, but is present if you want to see or modify the code.
 
+---
 ### Configuration
 
 Open cfg.yaml in a text editor such as notepad.
@@ -60,10 +63,12 @@ Blizzard blocks certain names based on length and keywords. If your name doesn't
 ```PresetName``` is the name of the preset that will be loaded when your custom game is started.
 The Lindholm console will give an alert if it fails to find the preset you request. This might happen if Overwatch is taking a very long time to load on your system. If this happens, you can close Lindholm, set the preset manually, and restart Lindholm, as detailed in "Correcting Errors."
 
+---
 ### Running Lindholm
 
 Lindholm can be run in two ways, for convenience.
 
+---
 #### Full Setup Run
 
 **This is currently unstable, and not recommended.**
@@ -73,6 +78,7 @@ This will launch Overwatch, set up your custom game, and run the game.
 2. Overwatch must be closed.  
 3. Launch Lindholm.exe
 
+---
 #### Existing Server Run
 
 This run is triggered when Lindholm is launched while Overwatch open.
@@ -86,7 +92,7 @@ This lets you stop and restart the bot without needing to repeat server setup.
 3. Overwatch must be viewing the server's lobby screen. The lobby screen is reached from the main pause screen through esc -> show lobby.
 3. **Overwatch must have contrast set to minimum in settings.** This is set automatically during the Full Setup Run.
 
-
+---
 ## Interacting with Overwatch
 
 Maybe Lindholm made a mistake (see github issues) or maybe you want to change settings or swap a player.
@@ -101,6 +107,7 @@ To make changes safely:
 If you find Lindholm has added too many bots (a result of failing to remove bots), you may choose not to intervene.  
 This problem is usually fixed at the beginning of a new match, or when more players join.
 
+---
 ## FAQ
 
 - #### It crashes on the main menu with an error saying the menu failed to load, though the menu did load.
@@ -123,20 +130,23 @@ You can set the contrast back to normal in Overwatch's settings.
 - #### This got flagged by my antivirus!
 Lindholm accesses your Overwatch settings to save you a lot of setup. Some antivirus programs may think that looks suspicious and shut it down. If you want to see for yourself, you can check the source code yourself (it's pretty short) and compile your own exe from the source code. We recommend Visual Studio 2017 for this.
 
+---
 ## Built With
 
 * [Overwatch-Custom-Game-Automation](https://github.com/ItsDeltin/Overwatch-Custom-Game-Automation) - Makes interfacing with Overwatch custom games possible.
 
+---
 ## Authors
 
 * **Deltin** - *Overwatch custom game interfacing* - [Github](https://github.com/ItsDeltin) - [Website](https://www.abyxa.net/)
 * **Qazzquimby** - *Server level work* - [Github](https://github.com/Qazzquimby)
 
+---
 ## Contributing
 
 Not organized yet. Consider creating an issue or contacting me [here](https://discord.gg/XdfYVr9)
 
-
+---
 ## License
 
 This project is licensed under the MIT License.
